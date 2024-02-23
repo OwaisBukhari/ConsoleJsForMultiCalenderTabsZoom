@@ -56,8 +56,28 @@
             divToCenter.style.left = '-500px'; // Adjust the left position as needed
             divToCenter.style.opacity = '1';
             divToCenter.style.transform = 'none';
+            // SET VISIVILITY TO HIDDEN?
+            //  divToCenter.style.visibility = 'hidden';
         }
     }
+    function isDivVisible() {
+        const divToCheck = document.querySelector('[role="button"]');
+        return divToCheck && divToCheck.offsetParent !== null;
+    }
+    
+    // Create a MutationObserver to watch for changes in the DOM
+    const observer = new MutationObserver(function (mutations) {
+        if (isDivVisible()) {
+            // Call centerDiv when the div becomes visible
+            centerDiv();
+        }
+    });
+    
+    // Configure the observer to listen for changes to the entire document's subtree
+    const observerConfig = { subtree: true, childList: true };
+    
+    // Start observing the document
+    observer.observe(document, observerConfig);
 
     // Function to adjust the position of the div
     function adjustDivPosition() {
@@ -77,7 +97,7 @@
     zoomInButton.textContent = 'Zoom In';
     zoomInButton.style.position = 'fixed';
     zoomInButton.style.top = '60px'; // Adjust the position as needed
-    zoomInButton.style.right = '80px';
+    zoomInButton.style.right = '100px';
     zoomInButton.style.zIndex = '1000';
     zoomInButton.addEventListener('click', zoomIn);
 
@@ -100,12 +120,12 @@
     }
 
     // Listen for the click event on the specific button
-    document.addEventListener('click', function (event) {
-        if (event.target.closest('[data-eventid]')) {
-            // Code to show/hide the div goes here
+    // document.addEventListener('click', function (event) {
+    // if (event.target.getAttribute('role') === 'button') {
+    //         // Code to show/hide the div goes here
 
-            // Center the div when it appears
-            centerDiv();
-        }
-    });
+    //         // Center the div when it appears
+    //         centerDiv();
+    //     }
+    // });
 })();
